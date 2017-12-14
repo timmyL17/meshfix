@@ -30,19 +30,23 @@ inline bool isDegenerateEdge(Edge *e)
 
 bool isDegenerateTriangle(Triangle *t)
 {
+    double areaTol = 1e-9;
  double xy1[2], xy2[2], xy3[2];
  xy1[0] = t->v1()->x; xy1[1] = t->v1()->y; 
  xy2[0] = t->v2()->x; xy2[1] = t->v2()->y; 
  xy3[0] = t->v3()->x; xy3[1] = t->v3()->y; 
- if (orient2d(xy1, xy2, xy3)!=0.0) return false;
+ //if (orient2d(xy1, xy2, xy3)!=0.0) return false;
+ if (std::fabs(orient2d(xy1, xy2, xy3)) > areaTol) return false;
  xy1[0] = t->v1()->y; xy1[1] = t->v1()->z; 
  xy2[0] = t->v2()->y; xy2[1] = t->v2()->z; 
  xy3[0] = t->v3()->y; xy3[1] = t->v3()->z; 
- if (orient2d(xy1, xy2, xy3)!=0.0) return false;
+ //if (orient2d(xy1, xy2, xy3)!=0.0) return false;
+ if (std::fabs(orient2d(xy1, xy2, xy3)) > areaTol) return false;
  xy1[0] = t->v1()->z; xy1[1] = t->v1()->x; 
  xy2[0] = t->v2()->z; xy2[1] = t->v2()->x; 
  xy3[0] = t->v3()->z; xy3[1] = t->v3()->x; 
- if (orient2d(xy1, xy2, xy3)!=0.0) return false;
+ //if (orient2d(xy1, xy2, xy3)!=0.0) return false;
+ if (std::fabs(orient2d(xy1, xy2, xy3)) > areaTol) return false;
  return true;
 }
 
@@ -438,7 +442,7 @@ bool meshfix(
   tin.fillSmallBoundaries(tin.E.numels(), true, true);
 
   // Run geometry correction
-  if (tin.boundaries() || !meshclean(epsilon_angle,tin))
+  if (tin.boundaries() || !meshclean(epsilon_angle,tin))//,100,10))
   {
 #ifdef MESHFIX_VERBOSE
     fprintf(stderr,"MeshFix failed!\n");

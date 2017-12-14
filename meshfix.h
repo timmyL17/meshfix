@@ -33,7 +33,8 @@ inline bool meshfix(
   const Eigen::MatrixXd & V,
   const Eigen::MatrixXi & F,
   Eigen::MatrixXd & W,
-  Eigen::MatrixXi & G);
+  Eigen::MatrixXi & G,
+  bool keepAllComponents=false);
 // Implementation
 
 #include "mesh_to_ext_tri_mesh.h"
@@ -43,7 +44,8 @@ inline bool meshfix(
   const Eigen::MatrixXd & V,
   const Eigen::MatrixXi & F,
   Eigen::MatrixXd & W,
-  Eigen::MatrixXi & G)
+  Eigen::MatrixXi & G,
+  bool keepAllComponents)
 {
   ExtTriMesh tin;
   mesh_to_ext_tri_mesh(V,F,tin);
@@ -53,7 +55,7 @@ inline bool meshfix(
   tin.forceNormalConsistence();
   tin.duplicateNonManifoldVertices();
   tin.removeDuplicatedTriangles();
-  if(!meshfix(0,false,tin))
+  if(!meshfix(0,keepAllComponents,tin))
   {
     return false;
   }

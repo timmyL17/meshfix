@@ -27,6 +27,7 @@ set(SUPERLU_DIR "${OPENNL_DIR}/SuperLU/")
 
 include_directories("${JMESHEXT_DIR}/include")
 include_directories("${JMESH_DIR}/include")
+include_directories("/usr/include/eigen3")
 add_subdirectory("${JMESHEXT_DIR}")
 find_package(BLAS REQUIRED)
 find_package(LAPACK REQUIRED)
